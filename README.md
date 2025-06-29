@@ -4,11 +4,11 @@
 
 From the root 'Degreed' directory execute the following:
 
-**Linux/MacOS**
+**Linux/MacOS**  
 `dotnet run --project ./src/Degreed.Homework.Api`   
 `dotnet run --project ./src/Degreed.Homework.Client`
 
-**Windows**
+**Windows**  
 `./run_all.bat`
 
 Go to http://localhost:5078
