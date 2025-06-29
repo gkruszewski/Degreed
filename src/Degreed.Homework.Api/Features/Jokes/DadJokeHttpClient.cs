@@ -11,7 +11,7 @@ internal partial class DadJokeHttpClient
     private static readonly JsonSerializerOptions JsonSerializerOptions = new()
     {
         PropertyNameCaseInsensitive = true,
-        PropertyNamingPolicy = new UnderscoreRemoveNamingPolicy()
+        PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower
     };
 
     public DadJokeHttpClient(HttpClient httpClient)
@@ -50,14 +50,5 @@ internal partial class DadJokeHttpClient
             StatusCode = (int)response.StatusCode,
             Result = response.IsSuccessStatusCode ? JsonSerializer.Deserialize<JokePaginationResponse>(content, JsonSerializerOptions) : new Result<JokePaginationResponse>(new InvalidOperationException(content))
         };
-    }
-
-    private sealed class UnderscoreRemoveNamingPolicy
-        : JsonNamingPolicy
-    {
-        public override string ConvertName(string name)
-        {
-            return name.Replace("_", string.Empty);
-        }
     }
 }
