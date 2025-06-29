@@ -1,0 +1,480 @@
+# Top-most EditorConfig file based on Roslyn
+# https://github.com/dotnet/roslyn/blob/master/.editorconfig
+root = true
+
+# All Files:
+[*]
+# Do not use tabs for indentation
+indent_style = space
+
+# C# Files:
+[*.cs]
+indent_size = 4
+insert_final_newline = true
+charset = utf-utf-8-bom
+
+# C# XML Project Files:
+[*.csproj]
+indent_size = 2
+
+# XML Configuration Files:
+[*.{props,targets,ruleset,config,nuspec,resx}]
+indent_size = 2
+
+# JSON Files:
+[*.json]
+indent_size = 2
+
+# https://docs.microsoft.com/en-us/visualstudio/ide/editorconfig-code-style-settings-reference
+# https://docs.microsoft.com/en-us/visualstudio/ide/create-portable-custom-editor-options
+# http://kent-boogaart.com/blog/editorconfig-reference-for-c-developers
+
+[*.{cs,vb}]
+# .NET Code Style Settings
+## "This." and "Me." Qualifiers
+
+### dotnet_style_qualification_for_field = false:silent
+#### When this rule is set to true, prefer fields to be prefaced with this. in C# or Me. in Visual Basic
+dotnet_style_qualification_for_field = false:silent
+
+### dotnet_style_qualification_for_property = false:silent
+#### When this rule is set to true, prefer properties to be prefaced with this. in C# or Me. in Visual Basic.
+dotnet_style_qualification_for_property = false:silent
+
+### dotnet_style_qualification_for_method = false:silent
+#### When this rule is set to true, prefer methods to be prefaced with this. in C# or Me. in Visual Basic.
+dotnet_style_qualification_for_method = false:silent
+
+### dotnet_style_qualification_for_event = false:silent
+#### When this rule is set to true, prefer events to be prefaced with this. in C# or Me. in Visual Basic.
+dotnet_style_qualification_for_event = false:silent
+
+
+
+## Language Keywords Instead of Framework Type Names For Type References
+
+### dotnet_style_predefined_type_for_locals_parameters_members = true:silent
+#### When this rule is set to true, prefer the language keyword for local variables, method parameters, and class members, instead of the type name, for types that have a keyword to represent them.
+dotnet_style_predefined_type_for_locals_parameters_members = true:suggestion
+
+### dotnet_style_predefined_type_for_member_access = true:silent
+#### When this rule is set to true, prefer the language keyword for member access expressions, instead of the type name, for types that have a keyword to represent them.
+dotnet_style_predefined_type_for_member_access = true:suggestion
+
+
+
+## Modifier Preferences
+
+### dotnet_style_require_accessibility_modifiers = for_non_interface_members:silent
+#### This rule does not accept a true or false value; instead it accepts a value from the following table:
+#### always: Prefer accessibility modifiers to be specified
+#### for_non_interface_members: Prefer accessibility modifiers to be declared except for public interface members. This is the same as always and has been added for future proofing if C# adds default interface methods.
+#### never: Do not prefer accessibility modifiers to be specified
+dotnet_style_require_accessibility_modifiers = for_non_interface_members:suggestion
+
+### dotnet_style_readonly_field = true:suggestion
+#### When this rule is set to true, prefer that fields should be marked with readonly (C#) or ReadOnly (Visual Basic) if they are only ever assigned inline, or inside of a constructor.
+dotnet_style_readonly_field = true:warning
+
+
+
+## Parentheses Preferences
+
+### dotnet_style_parentheses_in_arithmetic_binary_operators = always_for_clarity:silent
+#### When this rule is set to always_for_clarity, prefer parentheses to clarify arithmetic operator (*, /, %, +, -, <<, >>, &, ^, |) precedence.
+
+### dotnet_style_parentheses_in_other_binary_operators = always_for_clarity:silent
+#### When this rule is set to always_for_clarity, prefer parentheses to clarify relational operator (>, <, <=, >=, is, as, ==, !=) precedence.
+
+### dotnet_style_parentheses_in_other_operators = always_for_clarity:silent
+#### When this rule is set to always_for_clarity, prefer parentheses to clarify other binary operator (&&, ||, ??) precedence.
+
+### dotnet_style_parentheses_in_relational_binary_operators = never_if_unnecessary:silent
+#### When this rule is set to always_for_clarity, prefer parentheses to clarify operator precedence.
+
+
+
+## Expression-Level Preferences
+
+### dotnet_style_object_initializer = true:suggestion
+#### When this rule is set to true, prefer objects to be initialized using object initializers when possible.
+
+### dotnet_style_collection_initializer = true:suggestion
+#### When this rule is set to true, prefer collections to be initialized using collection initializers when possible.
+
+### dotnet_style_explicit_tuple_names = true:suggestion
+#### When this rule is set to true, prefer tuple names to ItemX properties.
+#dotnet_style_explicit_tuple_names = true:warning
+
+## dotnet_style_prefer_inferred_tuple_names = true:suggestion
+### When this rule is set to true, prefer inferred tuple element names.
+#dotnet_style_prefer_inferred_tuple_names = true:warning
+
+### dotnet_style_prefer_inferred_anonymous_type_member_names = true:suggestion
+#### When this rule is set to true, prefer inferred anonymous type member names.
+dotnet_style_prefer_inferred_anonymous_type_member_names = false:silent
+
+### dotnet_style_prefer_auto_properties = true:silent
+#### When this rule is set to true, prefer autoproperties over properties with private backing fields.
+dotnet_style_prefer_auto_properties = true:suggestion
+
+### dotnet_style_prefer_is_null_check_over_reference_equality_method = true:suggestion
+#### When this rule is set to true, prefer using a null check with pattern-matching over object.ReferenceEquals.
+#dotnet_style_prefer_is_null_check_over_reference_equality_method = true:warning
+
+### dotnet_style_prefer_conditional_expression_over_assignment = true:silent
+#### When this rule is set to true, prefer assignments with a ternary conditional over an if-else statement.
+dotnet_style_prefer_conditional_expression_over_assignment = true:silent
+
+### dotnet_style_prefer_conditional_expression_over_return = true:silent
+#### When this rule is set to true, prefer return statements to use a ternary conditional over an if-else statement.
+dotnet_style_prefer_conditional_expression_over_return = true:silent
+
+
+
+## "Null" Checking Preferences
+
+### dotnet_style_coalesce_expression = true:suggestion
+#### When this rule is set to true, prefer null coalescing expressions to ternary operator checking.
+dotnet_style_coalesce_expression = true:warning
+
+### dotnet_style_null_propagation = true:suggestion
+#### When this rule is set to true, prefer to use null-conditional operator when possible.
+#dotnet_style_null_propagation = true:suggestions
+
+
+
+# .NET Formatting Settings:
+## Organize Usings:
+
+### dotnet_sort_system_directives_first = true
+#### When this rule is set to true, sort System.* using directives alphabetically, and place them before other usings.
+dotnet_sort_system_directives_first = false
+
+### dotnet_separate_import_directive_groups = false
+#### When this rule is set to true, place a blank line between using directive groups.
+dotnet_separate_import_directive_groups = false
+
+# TODO: .NET Naming Settings
+
+[*.cs]
+# TODO: C# Code Style Settings
+# C# Code Style Settings:
+## Modifier Preferences
+### TODO: csharp_preferred_modifier_order
+
+
+
+## Implicit and Explicit Types
+### csharp_style_var_for_built_in_types = true:silent
+#### When this rule is set to true, prefer var is used to declare variables with built-in system types such as int.
+csharp_style_var_for_built_in_types = true:silent
+
+### csharp_style_var_when_type_is_apparent = true:silent
+#### When this rule is set to true, prefer var when the type is already mentioned on the right-hand side of a declaration expression.
+csharp_style_var_when_type_is_apparent = true:silent
+
+### csharp_style_var_elsewhere = true:silent
+#### When this rule is set to true, prefer var over explicit type in all cases, unless overridden by another code style rule.
+csharp_style_var_elsewhere = true:silent
+
+
+
+## Expression-Bodied Members
+
+### csharp_style_expression_bodied_methods = false:silent
+#### This rule accepts values from the following table:
+#### true: Prefer expression-bodied members for methods
+#### when_on_single_line: Prefer expression-bodied members for methods when they will be a single line
+#### false: Prefer block bodies for methods
+#csharp_style_expression_bodied_methods = true:suggestion
+
+### csharp_style_expression_bodied_constructors = false:silent
+#### This rule accepts values from the following table:
+#### true: Prefer expression-bodied members for constructors
+#### when_on_single_line: Prefer expression-bodied members for constructors when they will be a single line
+#### false: Prefer block bodies for constructors
+#csharp_style_expression_bodied_constructors = true:suggestion
+
+### csharp_style_expression_bodied_operators = false:silent
+#### This rule accepts values from the following table:
+#### true: Prefer expression-bodied members for operators
+#### when_on_single_line: Prefer expression-bodied members for operators when they will be a single line
+#### false: Prefer block bodies for operators
+#csharp_style_expression_bodied_operators = true:suggestion
+
+### csharp_style_expression_bodied_properties = true:silent
+#### This rule accepts values from the following table:
+#### true: Prefer expression-bodied members for properties
+#### when_on_single_line: Prefer expression-bodied members for properties when they will be a single line
+#### false: Prefer block bodies for properties
+csharp_style_expression_bodied_properties = true:suggestion
+
+### csharp_style_expression_bodied_indexers = true:silent
+#### This rule accepts values from the following table:
+#### true: Prefer expression-bodied members for indexers
+#### when_on_single_line: Prefer expression-bodied members for indexers when they will be a single line
+#### false: Prefer block bodies for indexers
+csharp_style_expression_bodied_indexers = true:suggestion
+
+### csharp_style_expression_bodied_accessors = true:silent
+#### This rule accepts values from the following table:
+#### true: Prefer expression-bodied members for accessors
+#### when_on_single_line: Prefer expression-bodied members for accessors when they will be a single line
+#### false: Prefer block bodies for accessors
+csharp_style_expression_bodied_accessors = true:suggestion
+
+
+## Pattern Matching
+
+### csharp_style_pattern_matching_over_is_with_cast_check = true:suggestion
+#### When this rule is set to true, prefer pattern matching instead of is expressions with type casts.
+
+### csharp_style_pattern_matching_over_as_with_null_check = true:suggestion
+#### When this rule is set to true, prefer pattern matching instead of as expressions with null checks to determine if something is of a particular type.
+
+
+
+## Inlined Variable Declarations
+
+### csharp_style_inlined_variable_declaration = true:suggestion
+#### When this rule is set to true, prefer out variables to be declared inline in the argument list of a method call when possible.
+
+
+
+## Expression-Level Preferences
+
+### csharp_prefer_simple_default_expression = true:suggestion
+#### When this rule is set to true, prefer default over default(T).
+
+### csharp_style_deconstructed_variable_declaration = true:suggestion
+#### When this rule is set to true, prefer deconstructed variable declaration.
+
+csharp_style_pattern_local_over_anonymous_function = true:silent
+#### When this rule is set to true, prefer local functions over anonymous functions.
+
+
+
+## "Null" Checking Preferences
+
+### csharp_style_throw_expression = true:suggestion
+#### When this rule is set to true, prefer to use throw expressions instead of throw statements.
+
+### csharp_style_conditional_delegate_call = true:suggestion
+#### When this rule is set to true, prefer to use the conditional coalescing operator (?.) when invoking a lambda expression, instead of performing a null check.
+
+
+## Code Block Preferences
+
+### csharp_prefer_braces = true:silent
+#### When this rule is set to true, prefer curly braces even for one line of code.
+csharp_prefer_braces = true:suggestion
+
+
+
+# C# Formatting Settings
+## Newline Options
+
+### csharp_new_line_before_open_brace = all
+#### This rule concerns whether an open brace { should be placed on the same line as the preceding code, or on a new line. For this rule, you do not specify true or false. Instead you specify all, none, or one or more code elements such as methods or properties, to define when this rule should be applied. The complete list of allowable values is shown in the following table:
+#### accessors, anonymous_methods, anonymous_types, control_blocks, events, indexers, lambdas, local_functions, methods, object_collection_array_initializers, properties, types.
+#### (For multiple kinds, separate with ',').
+####     Require braces to be on a new line for the specified code elements (also known as "Allman" style)
+#### all: Require braces to be on a new line for all expressions ("Allman" style)
+#### none: Require braces to be on the same line for all expressions ("K&R")
+#csharp_new_line_before_open_brace = all:suggestion
+
+### csharp_new_line_before_else = true
+#### When this rule is set to true, place else statements on a new line.
+#csharp_new_line_before_else = true:suggestion
+
+### csharp_new_line_before_catch = true
+#### When this rule is set to true, place catch statements on a new line.
+#csharp_new_line_before_catch = true:suggestion
+
+### csharp_new_line_before_finally = true
+#### When this rule is set to true, require finally statements to be on a new line after the closing brace.
+#csharp_new_line_before_finally = true:suggestion
+
+### csharp_new_line_before_members_in_object_initializers = true
+#### When this rule is set to true, require members of object initializers to be on separate lines.
+#csharp_new_line_before_members_in_object_initializers = true:suggestion
+
+### csharp_new_line_before_members_in_anonymous_types = true
+#### When this rule is set to true, require members of anonymous types to be on separate lines.
+#csharp_new_line_before_members_in_anonymous_types = true:suggestion
+
+### csharp_new_line_between_query_expression_clauses = true
+#### When this rule is set to true, require elements of query expression clauses to be on separate lines.
+#csharp_new_line_between_query_expression_clauses = true:suggestion
+
+
+
+## Indentation Options
+
+### csharp_indent_case_contents = true
+#### When this rule is set to true, indent switch case contents.
+#csharp_indent_case_contents = true:suggestion
+
+### csharp_indent_switch_labels = true
+#### When this rule is set to true, indent switch labels.
+#csharp_indent_switch_labels = true:suggestion
+
+### csharp_indent_labels = no_change
+#### This rule does not accept a true or false value; instead it accepts a value from the following table:
+#### flush_left: Labels are placed at the leftmost column
+#### one_less_than_current: Labels are placed at one less indent to the current context
+#### no_change: Labels are placed at the same indent as the current context
+#csharp_indent_labels = no_change:suggestion
+
+
+
+## Spacing Options
+
+### csharp_space_after_cast = false
+#### When this rule is set to true, require a space between a cast and the value.
+#csharp_space_after_cast = false:suggestion
+
+### csharp_space_after_keywords_in_control_flow_statements = true
+#### When this rule is set to true, require a space after a keyword in a control flow statement such as a for loop.
+#csharp_space_after_keywords_in_control_flow_statements = true:suggestion
+
+### csharp_space_between_method_declaration_parameter_list_parentheses = false
+#### When this rule is set to true, place a space character after the opening parenthesis and before the closing parenthesis of a method declaration parameter list.
+#csharp_space_between_method_declaration_parameter_list_parentheses = false:suggestion
+
+### csharp_space_between_method_call_parameter_list_parentheses = false
+#### When this rule is set to true, place a space character after the opening parenthesis and before the closing parenthesis of a method call.
+#csharp_space_between_method_call_parameter_list_parentheses = false:suggestion
+
+### csharp_space_between_parentheses = false
+#### This rule accepts one or more values from the following table:
+#### control_flow_statements: Place space between parentheses of control flow statements
+#### expressions: Place space between parentheses of expressions
+#### type_casts: Place space between parentheses in type casts
+
+### csharp_space_before_colon_in_inheritance_clause = true
+#### When this rule is set to true, require a space before the colon for bases or interfaces in a type declaration.
+#csharp_space_before_colon_in_inheritance_clause = true:suggestion
+
+### csharp_space_after_colon_in_inheritance_clause = true
+#### When this rule is set to true, require a space after the colon for bases or interfaces in a type declaration.
+#csharp_space_after_colon_in_inheritance_clause = true:suggestion
+
+### csharp_space_around_binary_operators = before_and_after
+#### This rule accepts one value from the following table:
+#### before_and_after: Insert space before and after the binary operator
+#### none: Remove spaces before and after the binary operator
+#### ignore: Ignore spaces around binary operators
+#csharp_space_around_binary_operators = before_and_after:suggestion
+
+### csharp_space_between_method_declaration_empty_parameter_list_parentheses = false
+#### When this rule is set to true, insert space within empty parameter list parentheses for a method declaration.
+#csharp_space_between_method_declaration_empty_parameter_list_parentheses = false:suggestion
+
+### csharp_space_between_method_call_name_and_opening_parenthesis = false
+#### When this rule is set to true, insert space between method call name and opening parenthesis.
+#csharp_space_between_method_call_name_and_opening_parenthesis = false:suggestion
+
+### csharp_space_between_method_call_empty_parameter_list_parentheses = false
+#### When this rule is set to true, insert space within empty argument list parentheses.
+#csharp_space_between_method_call_empty_parameter_list_parentheses = false:suggestion
+
+
+
+## Wrapping Options
+
+### csharp_preserve_single_line_statements = true
+#### When this rule is set to true, leave statements and member declarations on the same line.
+#csharp_preserve_single_line_statements = false:warning
+
+### csharp_preserve_single_line_blocks = true
+#### When this rule is set to true, leave code block on single line.
+#csharp_preserve_single_line_blocks = true:suggestion
+
+
+
+## TODO: C# Naming Settings
+
+# Roslyn Naming Settings:
+# https://github.com/dotnet/roslyn/blob/master/.editorconfig#L59-L137
+
+# Non-private static fields are PascalCase
+#dotnet_naming_rule.non_private_static_fields_should_be_pascal_case.severity = suggestion
+#dotnet_naming_rule.non_private_static_fields_should_be_pascal_case.symbols = non_private_static_fields
+#dotnet_naming_rule.non_private_static_fields_should_be_pascal_case.style = non_private_static_field_style
+#
+#dotnet_naming_symbols.non_private_static_fields.applicable_kinds = field
+#dotnet_naming_symbols.non_private_static_fields.applicable_accessibilities = public, protected, internal, protected_internal, private_protected
+#dotnet_naming_symbols.non_private_static_fields.required_modifiers = static
+#
+#dotnet_naming_style.non_private_static_field_style.capitalization = pascal_case
+
+# Non-private readonly fields are PascalCase
+#dotnet_naming_rule.non_private_readonly_fields_should_be_pascal_case.severity = suggestion
+#dotnet_naming_rule.non_private_readonly_fields_should_be_pascal_case.symbols = non_private_readonly_fields
+#dotnet_naming_rule.non_private_readonly_fields_should_be_pascal_case.style = non_private_readonly_field_style
+#
+#dotnet_naming_symbols.non_private_readonly_fields.applicable_kinds = field
+#dotnet_naming_symbols.non_private_readonly_fields.applicable_accessibilities = public, protected, internal, protected_internal, private_protected
+#dotnet_naming_symbols.non_private_readonly_fields.required_modifiers = readonly
+#
+#dotnet_naming_style.non_private_readonly_field_style.capitalization = pascal_case
+
+# Constants are PascalCase
+dotnet_naming_rule.constants_should_be_pascal_case.severity = suggestion
+dotnet_naming_rule.constants_should_be_pascal_case.symbols = constants
+dotnet_naming_rule.constants_should_be_pascal_case.style = constant_style
+#
+dotnet_naming_symbols.constants.applicable_kinds = field, local
+dotnet_naming_symbols.constants.required_modifiers = const
+#
+dotnet_naming_style.constant_style.capitalization = pascal_case
+
+# Static fields are camelCase and start with s_
+#dotnet_naming_rule.static_fields_should_be_camel_case.severity = suggestion
+#dotnet_naming_rule.static_fields_should_be_camel_case.symbols = static_fields
+#dotnet_naming_rule.static_fields_should_be_camel_case.style = static_field_style
+#
+#dotnet_naming_symbols.static_fields.applicable_kinds = field
+#dotnet_naming_symbols.static_fields.required_modifiers = static
+#
+#dotnet_naming_style.static_field_style.capitalization = camel_case
+#dotnet_naming_style.static_field_style.required_prefix = s_
+
+# Instance fields are camelCase and start with _
+dotnet_naming_rule.instance_fields_should_be_camel_case.severity = suggestion
+dotnet_naming_rule.instance_fields_should_be_camel_case.symbols = instance_fields
+dotnet_naming_rule.instance_fields_should_be_camel_case.style = instance_field_style
+
+dotnet_naming_symbols.instance_fields.applicable_kinds = field
+
+dotnet_naming_style.instance_field_style.capitalization = camel_case
+dotnet_naming_style.instance_field_style.required_prefix = _
+
+# Locals and parameters are camelCase
+#dotnet_naming_rule.locals_should_be_camel_case.severity = suggestion
+#dotnet_naming_rule.locals_should_be_camel_case.symbols = locals_and_parameters
+#dotnet_naming_rule.locals_should_be_camel_case.style = camel_case_style
+#
+#dotnet_naming_symbols.locals_and_parameters.applicable_kinds = parameter, local
+#
+#dotnet_naming_style.camel_case_style.capitalization = camel_case
+
+# Local functions are PascalCase
+#dotnet_naming_rule.local_functions_should_be_pascal_case.severity = suggestion
+#dotnet_naming_rule.local_functions_should_be_pascal_case.symbols = local_functions
+#dotnet_naming_rule.local_functions_should_be_pascal_case.style = local_function_style
+#
+#dotnet_naming_symbols.local_functions.applicable_kinds = local_function
+#
+#dotnet_naming_style.local_function_style.capitalization = pascal_case
+
+# By default, name items with PascalCase
+#dotnet_naming_rule.members_should_be_pascal_case.severity = suggestion
+#dotnet_naming_rule.members_should_be_pascal_case.symbols = all_members
+#dotnet_naming_rule.members_should_be_pascal_case.style = pascal_case_style
+#
+#dotnet_naming_symbols.all_members.applicable_kinds = *
+#
+#dotnet_naming_style.pascal_case_style.capitalization = pascal_case
