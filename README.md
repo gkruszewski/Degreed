@@ -5,7 +5,7 @@
 From the root 'Degreed' directory execute the following:
 
 **Linux/MacOS**
-`dotnet run --project ./src/Degreed.Homework.Api`
+`dotnet run --project ./src/Degreed.Homework.Api`   
 `dotnet run --project ./src/Degreed.Homework.Client`
 
 **Windows**
