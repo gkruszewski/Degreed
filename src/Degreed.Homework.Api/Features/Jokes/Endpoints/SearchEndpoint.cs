@@ -73,11 +73,12 @@ internal sealed class SearchEndpoint
 
         for (var i = 0; i < joke.Length; i++)
         {
+            var value = joke[i];
             var termMatch = i + term.Length <= joke.Length && joke
                 .Slice(i, term.Length)
                 .Equals(term, StringComparison.OrdinalIgnoreCase);
 
-            if (i > 0 && char.IsWhiteSpace(joke[i - 1]) && (char.IsLetterOrDigit(joke[i]) || char.IsPunctuation(joke[i])))
+            if (i > 0 && char.IsWhiteSpace(joke[i - 1]) && (char.IsLetterOrDigit(value) || char.IsPunctuation(value)))
             {
                 wordCount++;
             }
@@ -89,7 +90,7 @@ internal sealed class SearchEndpoint
             }
             else
             {
-                characters.Add(joke[i]);
+                characters.Add(value);
             }
         }
 

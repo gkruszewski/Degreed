@@ -21,17 +21,8 @@ internal sealed class RandomEndpoint
     public override async Task HandleAsync(CancellationToken cancellationToken)
     {
         var resultResponse = await _dadJokeHttpClient.Random(cancellationToken);
-        var response = resultResponse.Result.Match(response => Format(response.Joke), exception => exception.Message);
+        var response = resultResponse.Result.Match(response => response.Joke, exception => exception.Message);
 
         await SendStringAsync(response, resultResponse.StatusCode, MediaTypeNames.Text.Html, cancellationToken);
-    }
-
-    private string Format(string message)
-    {
-        return $"""
-            <p>
-                {message}
-            </p>
-            """;
     }
 }
