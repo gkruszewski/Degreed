@@ -39,7 +39,7 @@ internal sealed class SearchEndpoint
     {
         var term = Query<string>(nameof(JokePaginationResponse.Term), false);
         var resultResponse = await _dadJokeHttpClient.Search(1, 30, term, cancellationToken);
-        var response = resultResponse.Result.Match(response => Format(response.Results, term, EmphasizeTerm.Quotes), exception => exception.Message);
+        var response = resultResponse.Result.Match(response => Format(response.Results, term, EmphasizeTerm.AngleBrackets), exception => exception.Message);
 
         await SendStringAsync(response, resultResponse.StatusCode, MediaTypeNames.Text.Html, cancellationToken);
     }
@@ -55,7 +55,7 @@ internal sealed class SearchEndpoint
 
             if (messages.TryGetValue(size, out List<string> values))
             {
-                values.Add(new string([.. characters]));
+                values.Add(item);
             }
             else
             {
@@ -101,9 +101,9 @@ internal sealed class SearchEndpoint
         };
     }
 
-    private string GetEmphasize(ReadOnlySpan<char> term, EmphasizeTerm emphasizeTerm)
+    private ReadOnlySpan<char> GetEmphasize(ReadOnlySpan<char> term, EmphasizeTerm emphasizeTerm)
     {
-        static string ToUpper(ReadOnlySpan<char> term)
+        static ReadOnlySpan<char> ToUpper(ReadOnlySpan<char> term)
         {
             Span<char> destination = stackalloc char[term.Length];
 
@@ -114,14 +114,14 @@ internal sealed class SearchEndpoint
 
         return emphasizeTerm switch
         {
-            EmphasizeTerm.AngleBrackets => $"<{term}>",
+            EmphasizeTerm.AngleBrackets => $"&lt;{term}&gt;",
             EmphasizeTerm.Quotes => $"'{term}'",
             EmphasizeTerm.Uppercase => ToUpper(term),
-            _ => term.ToString()
+            _ => term
         };
     }
 
-    private string Format(Dictionary<Size, List<string>> messages)
+    private static string Format(IDictionary<Size, List<string>> messages)
     {
         var builder = new StringBuilder();
 

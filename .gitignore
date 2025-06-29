@@ -409,7 +409,6 @@ ASALocalRun/
 
 **/appsettings.Development.json
 **/appsettings.Local.json
-**/launchSettings.json
 **/internal-nlog.txt
 
 # Used by emacs' projectile plugin to set project scope other than to the git root
