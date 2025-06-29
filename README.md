@@ -2,7 +2,7 @@
 
 ## Run the application
 
-From the root 'Degreed' directory execute the following:
+From the root 'Degreed' directory execute the following command:
 
 **Linux/MacOS**  
 `dotnet run --project ./src/Degreed.Homework.Api`   
@@ -11,7 +11,7 @@ From the root 'Degreed' directory execute the following:
 **Windows**  
 `./run_all.bat`
 
-Go to http://localhost:5078
+Open your browser and go to http://localhost:5078
 
 ## Instructions
 
