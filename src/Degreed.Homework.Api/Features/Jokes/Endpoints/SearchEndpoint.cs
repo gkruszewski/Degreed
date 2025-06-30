@@ -86,7 +86,7 @@ internal sealed class SearchEndpoint
             if (termMatch)
             {
                 i += term.Length - 1;
-                characters.AddRange(GetEmphasize(term, emphasizeTerm));
+                characters.AddRange(Emphasize(term, emphasizeTerm));
             }
             else
             {
@@ -102,7 +102,7 @@ internal sealed class SearchEndpoint
         };
     }
 
-    private ReadOnlySpan<char> GetEmphasize(ReadOnlySpan<char> term, EmphasizeTerm emphasizeTerm)
+    private ReadOnlySpan<char> Emphasize(ReadOnlySpan<char> term, EmphasizeTerm emphasizeTerm)
     {
         static ReadOnlySpan<char> ToUpper(ReadOnlySpan<char> term)
         {
