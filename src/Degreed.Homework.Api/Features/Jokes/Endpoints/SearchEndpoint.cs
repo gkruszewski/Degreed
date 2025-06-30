@@ -39,18 +39,18 @@ internal sealed class SearchEndpoint
     {
         var term = Query<string>(nameof(JokePaginationResponse.Term), false);
         var resultResponse = await _dadJokeHttpClient.Search(term: term, cancellationToken: cancellationToken);
-        var response = resultResponse.Result.Match(response => Format(response.Results, term, Emphasize.AngleBrackets), exception => exception.Message);
+        var response = resultResponse.Result.Match(response => GroupAndEmphasize(response.Results, term, Emphasize.AngleBrackets), exception => exception.Message);
 
         await SendStringAsync(response, resultResponse.StatusCode, MediaTypeNames.Text.Html, cancellationToken);
     }
 
-    private string Format(IEnumerable<JokeResponse> jokes, string term, Emphasize emphasize)
+    private string GroupAndEmphasize(IEnumerable<JokeResponse> jokes, string term, Emphasize emphasize)
     {
         var messages = new Dictionary<Size, List<string>>();
 
         foreach (var joke in jokes.Select(jokeResponse => jokeResponse.Joke))
         {
-            var (size, characters) = Format(joke, term, emphasize);
+            var (size, characters) = GroupAndEmphasize(joke, term, emphasize);
             var item = new string([.. characters]);
 
             if (messages.TryGetValue(size, out var values))
@@ -66,7 +66,7 @@ internal sealed class SearchEndpoint
         return Format(messages);
     }
 
-    private (Size Size, IEnumerable<char> Characters) Format(ReadOnlySpan<char> joke, ReadOnlySpan<char> term, Emphasize emphasize)
+    private (Size Size, IEnumerable<char> Characters) GroupAndEmphasize(ReadOnlySpan<char> joke, ReadOnlySpan<char> term, Emphasize emphasize)
     {
         var characters = new List<char>();
         var wordCount = joke.Length > 0 ? 1 : 0;
@@ -102,23 +102,6 @@ internal sealed class SearchEndpoint
         };
     }
 
-    private string Format(IDictionary<Size, List<string>> messages)
-    {
-        var builder = new StringBuilder();
-
-        builder.Append("<p>");
-
-        foreach (var message in messages.OrderBy(selector => selector.Key))
-        {
-            builder.Append($"<dt><b>{message.Key}</b></dt>");
-            builder.Append($"<dd>{string.Join("</dd><dd>", message.Value)}</dd>");
-        }
-
-        builder.Append("</p>");
-
-        return builder.ToString();
-    }
-
     private ReadOnlySpan<char> EmphasizeTerm(ReadOnlySpan<char> term, Emphasize emphasize)
     {
         static ReadOnlySpan<char> ToUpper(ReadOnlySpan<char> term)
@@ -137,5 +120,22 @@ internal sealed class SearchEndpoint
             Emphasize.Uppercase => ToUpper(term),
             _ => term
         };
+    }
+
+    private string Format(IDictionary<Size, List<string>> messages)
+    {
+        var builder = new StringBuilder();
+
+        builder.Append("<p>");
+
+        foreach (var message in messages.OrderBy(selector => selector.Key))
+        {
+            builder.Append($"<dt><b>{message.Key}</b></dt>");
+            builder.Append($"<dd>{string.Join("</dd><dd>", message.Value)}</dd>");
+        }
+
+        builder.Append("</p>");
+
+        return builder.ToString();
     }
 }
