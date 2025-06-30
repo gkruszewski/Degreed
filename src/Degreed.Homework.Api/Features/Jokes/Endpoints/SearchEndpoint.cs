@@ -37,9 +37,8 @@ internal sealed class SearchEndpoint
 
     public override async Task HandleAsync(CancellationToken cancellationToken)
     {
-        var limit = Query<int>(nameof(JokePaginationResponse.Limit), false);
         var term = Query<string>(nameof(JokePaginationResponse.Term), false);
-        var resultResponse = await _dadJokeHttpClient.Search(limit, term, cancellationToken);
+        var resultResponse = await _dadJokeHttpClient.Search(term: term, cancellationToken: cancellationToken);
         var response = resultResponse.Result.Match(response => Format(response.Results, term, EmphasizeTerm.AngleBrackets), exception => exception.Message);
 
         await SendStringAsync(response, resultResponse.StatusCode, MediaTypeNames.Text.Html, cancellationToken);
@@ -75,7 +74,7 @@ internal sealed class SearchEndpoint
         for (var i = 0; i < joke.Length; i++)
         {
             var value = joke[i];
-            var termMatch = i + term.Length <= joke.Length && joke
+            var termMatch = term.Length > 0 && i + term.Length <= joke.Length && joke
                 .Slice(i, term.Length)
                 .Equals(term, StringComparison.OrdinalIgnoreCase);
 

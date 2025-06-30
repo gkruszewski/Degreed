@@ -32,24 +32,21 @@ internal class DadJokeHttpClient
         };
     }
 
-    public Task<ResultResponse<JokePaginationResponse>> Search(string term, CancellationToken cancellationToken)
+    public async Task<ResultResponse<JokePaginationResponse>> Search(int? page = 1, int? limit = 30, string term = null, CancellationToken cancellationToken = default)
     {
-        return Search(20, term, cancellationToken);
-    }
+        var queryBuilder = new QueryBuilder();
 
-    public Task<ResultResponse<JokePaginationResponse>> Search(int limit, string term, CancellationToken cancellationToken)
-    {
-        return Search(1, limit, term, cancellationToken);
-    }
-
-    public async Task<ResultResponse<JokePaginationResponse>> Search(int page, int limit, string term, CancellationToken cancellationToken)
-    {
-        var queryBuilder = new QueryBuilder
+        void AddQueryParameter<T>(string key, T value)
         {
-            { nameof(page), page.ToString() },
-            { nameof(limit), limit.ToString() },
-            { nameof(term), term }
-        };
+            if (value is not null)
+            {
+                queryBuilder.Add(key, value.ToString());
+            }
+        }
+
+        AddQueryParameter(nameof(page), page);
+        AddQueryParameter(nameof(limit), limit);
+        AddQueryParameter(nameof(term), term);
 
         using var response = await _httpClient.GetAsync("search" + queryBuilder, cancellationToken);
 
