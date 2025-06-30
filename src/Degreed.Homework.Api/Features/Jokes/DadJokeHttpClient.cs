@@ -19,7 +19,7 @@ internal class DadJokeHttpClient
         _httpClient = httpClient;
     }
 
-    public async Task<ResultResponse<JokeResponse>> Random(CancellationToken cancellationToken)
+    public async Task<ResultResponse<JokeResponse>> Random(CancellationToken cancellationToken = default)
     {
         using var response = await _httpClient.GetAsync(string.Empty, cancellationToken);
 
