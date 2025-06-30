@@ -39,7 +39,7 @@ internal sealed class SearchEndpoint
     {
         var limit = Query<int>(nameof(JokePaginationResponse.Limit), false);
         var term = Query<string>(nameof(JokePaginationResponse.Term), false);
-        var resultResponse = await _dadJokeHttpClient.Search(1, limit, term, cancellationToken);
+        var resultResponse = await _dadJokeHttpClient.Search(limit, term, cancellationToken);
         var response = resultResponse.Result.Match(response => Format(response.Results, term, EmphasizeTerm.AngleBrackets), exception => exception.Message);
 
         await SendStringAsync(response, resultResponse.StatusCode, MediaTypeNames.Text.Html, cancellationToken);
