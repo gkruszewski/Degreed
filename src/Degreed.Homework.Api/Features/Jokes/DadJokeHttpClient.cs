@@ -32,6 +32,16 @@ internal class DadJokeHttpClient
         };
     }
 
+    public Task<ResultResponse<JokePaginationResponse>> Search(string term, CancellationToken cancellationToken)
+    {
+        return Search(1, 20, term, cancellationToken);
+    }
+
+    public Task<ResultResponse<JokePaginationResponse>> Search(int limit, string term, CancellationToken cancellationToken)
+    {
+        return Search(1, limit, term, cancellationToken);
+    }
+
     public async Task<ResultResponse<JokePaginationResponse>> Search(int page, int limit, string term, CancellationToken cancellationToken)
     {
         var queryBuilder = new QueryBuilder

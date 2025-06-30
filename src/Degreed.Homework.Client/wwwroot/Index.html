@@ -31,7 +31,7 @@
     <div style="margin-top: 20px">
         <label for="term">Search Term:</label>
         <input type="text" name="term" id="search-term" />
-        <button hx-get="http://localhost:5242/joke/search"
+        <button hx-get="http://localhost:5242/joke/search?limit=30"
                 hx-include="#search-term"
                 hx-target="#search-results-joke">
             Search
