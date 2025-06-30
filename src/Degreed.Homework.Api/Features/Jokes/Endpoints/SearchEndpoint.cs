@@ -122,7 +122,7 @@ internal sealed class SearchEndpoint
         };
     }
 
-    private static string Format(IDictionary<Size, List<string>> messages)
+    private string Format(IDictionary<Size, List<string>> messages)
     {
         var builder = new StringBuilder();
 
