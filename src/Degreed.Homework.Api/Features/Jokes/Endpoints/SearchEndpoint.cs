@@ -102,6 +102,23 @@ internal sealed class SearchEndpoint
         };
     }
 
+    private string Format(IDictionary<Size, List<string>> messages)
+    {
+        var builder = new StringBuilder();
+
+        builder.Append("<p>");
+
+        foreach (var message in messages.OrderBy(selector => selector.Key))
+        {
+            builder.Append($"<dt><b>{message.Key}</b></dt>");
+            builder.Append($"<dd>{string.Join("</dd><dd>", message.Value)}</dd>");
+        }
+
+        builder.Append("</p>");
+
+        return builder.ToString();
+    }
+
     private ReadOnlySpan<char> EmphasizeTerm(ReadOnlySpan<char> term, Emphasize emphasize)
     {
         static ReadOnlySpan<char> ToUpper(ReadOnlySpan<char> term)
@@ -120,22 +137,5 @@ internal sealed class SearchEndpoint
             Emphasize.Uppercase => ToUpper(term),
             _ => term
         };
-    }
-
-    private string Format(IDictionary<Size, List<string>> messages)
-    {
-        var builder = new StringBuilder();
-
-        builder.Append("<p>");
-
-        foreach (var message in messages.OrderBy(selector => selector.Key))
-        {
-            builder.Append($"<dt><b>{message.Key}</b></dt>");
-            builder.Append($"<dd>{string.Join("</dd><dd>", message.Value)}</dd>");
-        }
-
-        builder.Append("</p>");
-
-        return builder.ToString();
     }
 }
