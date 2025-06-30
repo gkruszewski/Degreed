@@ -5,7 +5,7 @@ using System.Text.Json;
 
 namespace Degreed.Homework.Api.Features.Jokes;
 
-internal partial class DadJokeHttpClient
+internal class DadJokeHttpClient
 {
     private readonly HttpClient _httpClient;
     private static readonly JsonSerializerOptions JsonSerializerOptions = new()
