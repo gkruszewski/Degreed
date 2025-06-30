@@ -34,7 +34,7 @@ internal class DadJokeHttpClient
 
     public Task<ResultResponse<JokePaginationResponse>> Search(string term, CancellationToken cancellationToken)
     {
-        return Search(1, 20, term, cancellationToken);
+        return Search(20, term, cancellationToken);
     }
 
     public Task<ResultResponse<JokePaginationResponse>> Search(int limit, string term, CancellationToken cancellationToken)
