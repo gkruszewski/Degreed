@@ -2,7 +2,7 @@
 
 namespace Degreed.Homework.Api.Features.Jokes.Contracts;
 
-internal class ResultResponse<T> where T: class
+internal class ResultResponse<T> where T : class
 {
     public required int StatusCode { get; init; }
 
