@@ -12,9 +12,9 @@ internal sealed class SearchEndpoint
     private enum EmphasizeTerm
     {
         None,
+        AngleBrackets,
         Quotes,
-        Uppercase,
-        AngleBrackets
+        Uppercase
     }
 
     private enum Size
