@@ -53,7 +53,7 @@ internal sealed class SearchEndpoint
             var (size, characters) = Format(joke, term, emphasizeTerm);
             var item = new string([.. characters]);
 
-            if (messages.TryGetValue(size, out List<string> values))
+            if (messages.TryGetValue(size, out var values))
             {
                 values.Add(item);
             }
