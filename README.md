@@ -1,6 +1,6 @@
 # Degreed Coding Challenge
 
-## Run the application
+## Run the Application
 
 From the root directory execute the following command:
 
