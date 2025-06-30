@@ -9,7 +9,7 @@ internal sealed class SearchEndpoint
 {
     private readonly DadJokeHttpClient _dadJokeHttpClient;
 
-    private enum EmphasizeTerm
+    private enum Emphasize
     {
         None,
         AngleBrackets,
@@ -39,18 +39,18 @@ internal sealed class SearchEndpoint
     {
         var term = Query<string>(nameof(JokePaginationResponse.Term), false);
         var resultResponse = await _dadJokeHttpClient.Search(term: term, cancellationToken: cancellationToken);
-        var response = resultResponse.Result.Match(response => Format(response.Results, term, EmphasizeTerm.AngleBrackets), exception => exception.Message);
+        var response = resultResponse.Result.Match(response => Format(response.Results, term, Emphasize.AngleBrackets), exception => exception.Message);
 
         await SendStringAsync(response, resultResponse.StatusCode, MediaTypeNames.Text.Html, cancellationToken);
     }
 
-    private string Format(IEnumerable<JokeResponse> jokes, string term, EmphasizeTerm emphasizeTerm)
+    private string Format(IEnumerable<JokeResponse> jokes, string term, Emphasize emphasize)
     {
         var messages = new Dictionary<Size, List<string>>();
 
         foreach (var joke in jokes.Select(jokeResponse => jokeResponse.Joke))
         {
-            var (size, characters) = Format(joke, term, emphasizeTerm);
+            var (size, characters) = Format(joke, term, emphasize);
             var item = new string([.. characters]);
 
             if (messages.TryGetValue(size, out var values))
@@ -66,7 +66,7 @@ internal sealed class SearchEndpoint
         return Format(messages);
     }
 
-    private (Size Size, IEnumerable<char> Characters) Format(ReadOnlySpan<char> joke, ReadOnlySpan<char> term, EmphasizeTerm emphasizeTerm)
+    private (Size Size, IEnumerable<char> Characters) Format(ReadOnlySpan<char> joke, ReadOnlySpan<char> term, Emphasize emphasize)
     {
         var characters = new List<char>();
         var wordCount = joke.Length > 0 ? 1 : 0;
@@ -86,7 +86,7 @@ internal sealed class SearchEndpoint
             if (termMatch)
             {
                 i += term.Length - 1;
-                characters.AddRange(Emphasize(term, emphasizeTerm));
+                characters.AddRange(EmphasizeTerm(term, emphasize));
             }
             else
             {
@@ -102,7 +102,7 @@ internal sealed class SearchEndpoint
         };
     }
 
-    private ReadOnlySpan<char> Emphasize(ReadOnlySpan<char> term, EmphasizeTerm emphasizeTerm)
+    private ReadOnlySpan<char> EmphasizeTerm(ReadOnlySpan<char> term, Emphasize emphasize)
     {
         static ReadOnlySpan<char> ToUpper(ReadOnlySpan<char> term)
         {
@@ -113,11 +113,11 @@ internal sealed class SearchEndpoint
             return new string(destination);
         }
 
-        return emphasizeTerm switch
+        return emphasize switch
         {
-            EmphasizeTerm.AngleBrackets => $"&lt;{term}&gt;",
-            EmphasizeTerm.Quotes => $"'{term}'",
-            EmphasizeTerm.Uppercase => ToUpper(term),
+            Emphasize.AngleBrackets => $"&lt;{term}&gt;",
+            Emphasize.Quotes => $"'{term}'",
+            Emphasize.Uppercase => ToUpper(term),
             _ => term
         };
     }
