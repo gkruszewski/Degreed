@@ -2,7 +2,7 @@
 
 ## Run the application
 
-From the root 'Degreed' directory execute the following command:
+From the root directory execute the following command:
 
 **Linux/MacOS**  
 `dotnet run --project ./src/Degreed.Homework.Api`   
