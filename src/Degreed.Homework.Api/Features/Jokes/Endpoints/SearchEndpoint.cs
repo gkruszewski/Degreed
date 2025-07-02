@@ -73,10 +73,10 @@ internal sealed partial class SearchEndpoint
                 wordCount++;
             }
 
-            if (emphasizer.TryMatch(joke, i, StringComparison.OrdinalIgnoreCase, out var emphasizeTerm))
+            if (emphasizer.TryMatch(joke, i, StringComparison.OrdinalIgnoreCase, out var emphasizedTerm))
             {
                 i += emphasizer.DecrementLength();
-                characters.AddRange(emphasizeTerm);
+                characters.AddRange(emphasizedTerm);
             }
             else
             {
