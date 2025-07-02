@@ -38,7 +38,7 @@ internal readonly ref struct Emphasizer
         return false;
     }
 
-    public int DecrementLength()
+    public int MoveIndexForward()
     {
         return _term.Length - 1;
     }
