@@ -4,18 +4,10 @@ using System.Text;
 
 namespace Degreed.Homework.Api.Features.Jokes.Endpoints;
 
-internal sealed class SearchEndpoint
+internal sealed partial class SearchEndpoint
     : EndpointWithoutRequest
 {
     private readonly DadJokeHttpClient _dadJokeHttpClient;
-
-    private enum Emphasize
-    {
-        None,
-        AngleBrackets,
-        Quotes,
-        Uppercase
-    }
 
     private enum Size
     {
@@ -39,18 +31,19 @@ internal sealed class SearchEndpoint
     {
         var term = Query<string>(nameof(JokePaginationResponse.Term), false);
         var resultResponse = await _dadJokeHttpClient.Search(term: term, cancellationToken: cancellationToken);
-        var response = resultResponse.Result.Match(response => GroupAndEmphasize(response.Results, term, Emphasize.AngleBrackets), exception => exception.Message);
+        var response = resultResponse.Result.Match(response => GroupAndEmphasize(response.Results, term), exception => exception.Message);
 
         await SendStringAsync(response, resultResponse.StatusCode, MediaTypeNames.Text.Html, cancellationToken);
     }
 
-    private string GroupAndEmphasize(IEnumerable<JokeResponse> jokes, string term, Emphasize emphasize)
+    private string GroupAndEmphasize(IEnumerable<JokeResponse> jokes, string term)
     {
         var messages = new Dictionary<Size, List<string>>();
+        var emphasizer = new Emphasizer(term, Emphasize.AngleBrackets);
 
         foreach (var joke in jokes.Select(jokeResponse => jokeResponse.Joke))
         {
-            var (size, characters) = GroupAndEmphasize(joke, term, emphasize);
+            var (size, characters) = GroupAndEmphasize(joke, emphasizer);
             var item = new string([.. characters]);
 
             if (messages.TryGetValue(size, out var values))
@@ -66,7 +59,7 @@ internal sealed class SearchEndpoint
         return Format(messages);
     }
 
-    private (Size Size, IEnumerable<char> Characters) GroupAndEmphasize(ReadOnlySpan<char> joke, ReadOnlySpan<char> term, Emphasize emphasize)
+    private (Size Size, IEnumerable<char> Characters) GroupAndEmphasize(ReadOnlySpan<char> joke, Emphasizer emphasizer)
     {
         var characters = new List<char>();
         var wordCount = joke.Length > 0 ? 1 : 0;
@@ -74,19 +67,16 @@ internal sealed class SearchEndpoint
         for (var i = 0; i < joke.Length; i++)
         {
             var value = joke[i];
-            var termMatch = term.Length > 0 && i + term.Length <= joke.Length && joke
-                .Slice(i, term.Length)
-                .Equals(term, StringComparison.OrdinalIgnoreCase);
 
             if (i > 0 && char.IsWhiteSpace(joke[i - 1]) && (char.IsLetterOrDigit(value) || char.IsPunctuation(value)))
             {
                 wordCount++;
             }
 
-            if (termMatch)
+            if (emphasizer.TryMatch(joke, i, StringComparison.OrdinalIgnoreCase, out var emphasizeTerm))
             {
-                i += term.Length - 1;
-                characters.AddRange(EmphasizeTerm(term, emphasize));
+                i += emphasizer.DecrementLength(1);
+                characters.AddRange(emphasizeTerm);
             }
             else
             {
@@ -99,26 +89,6 @@ internal sealed class SearchEndpoint
             < 10 => (Size.Small, characters),
             < 20 => (Size.Medium, characters),
             _ => (Size.Large, characters)
-        };
-    }
-
-    private ReadOnlySpan<char> EmphasizeTerm(ReadOnlySpan<char> term, Emphasize emphasize)
-    {
-        static ReadOnlySpan<char> ToUpper(ReadOnlySpan<char> term)
-        {
-            Span<char> destination = stackalloc char[term.Length];
-
-            term.ToUpperInvariant(destination);
-
-            return new string(destination);
-        }
-
-        return emphasize switch
-        {
-            Emphasize.AngleBrackets => $"&lt;{term}&gt;",
-            Emphasize.Quotes => $"'{term}'",
-            Emphasize.Uppercase => ToUpper(term),
-            _ => term
         };
     }
 
