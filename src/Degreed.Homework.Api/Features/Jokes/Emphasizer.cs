@@ -3,33 +3,34 @@
 internal readonly ref struct Emphasizer
 {
     private readonly ReadOnlySpan<char> _term;
-    private readonly ReadOnlySpan<char> _emphisizedTerm;
+    private readonly Emphasize _emphisize;
 
     public Emphasizer(ReadOnlySpan<char> term, Emphasize emphasize)
     {
         _term = term;
-        _emphisizedTerm = emphasize switch
-        {
-            Emphasize.AngleBrackets => $"&lt;{term}&gt;",
-            Emphasize.Quotes => $"'{term}'",
-            Emphasize.Uppercase => ToUpper(term),
-            _ => term
-        };
+        _emphisize = emphasize;
     }
 
     public bool TryMatch(ReadOnlySpan<char> value, int index, StringComparison stringComparison, out ReadOnlySpan<char> emphasizedTerm)
     {
-        var isMatch = _term.Length > 0 && index + _term.Length <= value.Length && value
-            .Slice(index, _term.Length)
-            .Equals(_term, stringComparison);
-
         emphasizedTerm = null;
 
-        if (isMatch)
+        if (_term.Length > 0 && index + _term.Length <= value.Length)
         {
-            emphasizedTerm = _emphisizedTerm;
+            var part = value.Slice(index, _term.Length);
 
-            return true;
+            if (part.Equals(_term, stringComparison))
+            {
+                emphasizedTerm = _emphisize switch
+                {
+                    Emphasize.AngleBrackets => $"&lt;{part}&gt;",
+                    Emphasize.Quotes => $"'{part}'",
+                    Emphasize.Uppercase => ToUpper(part),
+                    _ => part
+                };
+
+                return true;
+            }
         }
 
         return false;
