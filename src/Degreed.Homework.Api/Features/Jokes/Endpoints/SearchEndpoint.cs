@@ -55,17 +55,13 @@ internal sealed partial class SearchEndpoint
 
     private (Size Size, IEnumerable<char> Characters) GroupAndEmphasize(ReadOnlySpan<char> joke, Emphasizer emphasizer)
     {
+        var wordCount = 0;
+        var wordCounter = new WordCounter(joke);
         var characters = new List<char>();
-        var wordCount = joke.Length > 0 ? 1 : 0;
 
         for (var i = 0; i < joke.Length; i++)
         {
-            var value = joke[i];
-
-            if (i > 0 && char.IsWhiteSpace(joke[i - 1]) && (char.IsLetterOrDigit(value) || char.IsPunctuation(value)))
-            {
-                wordCount++;
-            }
+            wordCounter.TryIncrement(i, out wordCount);
 
             if (emphasizer.TryMatch(joke, i, StringComparison.OrdinalIgnoreCase, out var emphasizedTerm))
             {
@@ -74,7 +70,7 @@ internal sealed partial class SearchEndpoint
             }
             else
             {
-                characters.Add(value);
+                characters.Add(joke[i]);
             }
         }
 
