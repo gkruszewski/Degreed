@@ -75,7 +75,7 @@ internal sealed partial class SearchEndpoint
 
             if (emphasizer.TryMatch(joke, i, StringComparison.OrdinalIgnoreCase, out var emphasizeTerm))
             {
-                i += emphasizer.DecrementLength(1);
+                i += emphasizer.DecrementLength();
                 characters.AddRange(emphasizeTerm);
             }
             else

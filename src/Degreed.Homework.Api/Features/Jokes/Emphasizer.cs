@@ -35,9 +35,9 @@ internal readonly ref struct Emphasizer
         return false;
     }
 
-    public int DecrementLength(int count)
+    public int DecrementLength()
     {
-        return _term.Length - count;
+        return _term.Length - 1;
     }
 
     private ReadOnlySpan<char> ToUpper(ReadOnlySpan<char> term)
