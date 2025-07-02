@@ -1,4 +1,4 @@
-﻿namespace Degreed.Homework.Api.Features.Jokes;
+﻿namespace Degreed.Homework.Api.Features.Jokes.Enums;
 
 internal enum Emphasize
 {

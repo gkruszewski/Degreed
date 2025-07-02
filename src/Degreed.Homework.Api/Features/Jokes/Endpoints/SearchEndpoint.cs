@@ -1,4 +1,5 @@
 ﻿using Degreed.Homework.Api.Features.Jokes.Contracts;
+using Degreed.Homework.Api.Features.Jokes.Enums;
 using System.Net.Mime;
 using System.Text;
 
@@ -8,13 +9,6 @@ internal sealed partial class SearchEndpoint
     : EndpointWithoutRequest
 {
     private readonly DadJokeHttpClient _dadJokeHttpClient;
-
-    private enum Size
-    {
-        Small,
-        Medium,
-        Large
-    }
 
     public SearchEndpoint(DadJokeHttpClient dadJokeHttpClient)
     {

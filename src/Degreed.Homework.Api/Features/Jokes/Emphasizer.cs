@@ -1,4 +1,6 @@
-﻿namespace Degreed.Homework.Api.Features.Jokes;
+﻿using Degreed.Homework.Api.Features.Jokes.Enums;
+
+namespace Degreed.Homework.Api.Features.Jokes;
 
 internal readonly ref struct Emphasizer
 {
