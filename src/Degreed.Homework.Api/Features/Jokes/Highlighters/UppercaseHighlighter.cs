@@ -5,7 +5,7 @@ internal sealed class UppercaseHighlighter
 {
     public ReadOnlySpan<char> Format(ReadOnlySpan<char> value)
     {
-         static ReadOnlySpan<char> ToUpper(ReadOnlySpan<char> term)
+        static ReadOnlySpan<char> ToUpper(ReadOnlySpan<char> term)
         {
             Span<char> destination = stackalloc char[term.Length];
 
