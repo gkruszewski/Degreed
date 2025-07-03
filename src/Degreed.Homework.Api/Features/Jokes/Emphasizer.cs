@@ -1,16 +1,14 @@
-﻿using Degreed.Homework.Api.Features.Jokes.Enums;
-
-namespace Degreed.Homework.Api.Features.Jokes;
+﻿namespace Degreed.Homework.Api.Features.Jokes;
 
 internal readonly ref struct Emphasizer
 {
     private readonly ReadOnlySpan<char> _term;
-    private readonly Emphasize _emphisize;
+    private readonly IHighlight _highlight;
 
-    public Emphasizer(ReadOnlySpan<char> term, Emphasize emphasize)
+    public Emphasizer(ReadOnlySpan<char> term, IHighlight highlight)
     {
         _term = term;
-        _emphisize = emphasize;
+        _highlight = highlight;
     }
 
     public bool TryMatch(ReadOnlySpan<char> value, int index, StringComparison stringComparison, out ReadOnlySpan<char> emphasizedTerm)
@@ -23,13 +21,7 @@ internal readonly ref struct Emphasizer
 
             if (part.Equals(_term, stringComparison))
             {
-                emphasizedTerm = _emphisize switch
-                {
-                    Emphasize.AngleBrackets => $"&lt;{part}&gt;",
-                    Emphasize.Quotes => $"'{part}'",
-                    Emphasize.Uppercase => ToUpper(part),
-                    _ => part
-                };
+                emphasizedTerm = _highlight.Format(part);
 
                 return true;
             }
@@ -41,14 +33,5 @@ internal readonly ref struct Emphasizer
     public int MoveIndexForward()
     {
         return _term.Length - 1;
-    }
-
-    private ReadOnlySpan<char> ToUpper(ReadOnlySpan<char> term)
-    {
-        Span<char> destination = stackalloc char[term.Length];
-
-        term.ToUpperInvariant(destination);
-
-        return new string(destination);
     }
 }

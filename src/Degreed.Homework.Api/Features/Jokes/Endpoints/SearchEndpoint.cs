@@ -1,5 +1,5 @@
 ﻿using Degreed.Homework.Api.Features.Jokes.Contracts;
-using Degreed.Homework.Api.Features.Jokes.Enums;
+using Degreed.Homework.Api.Features.Jokes.Highlighters;
 using System.Net.Mime;
 using System.Text;
 
@@ -9,6 +9,13 @@ internal sealed partial class SearchEndpoint
     : EndpointWithoutRequest
 {
     private readonly DadJokeHttpClient _dadJokeHttpClient;
+
+    private enum Size
+    {
+        Small,
+        Medium,
+        Large
+    }
 
     public SearchEndpoint(DadJokeHttpClient dadJokeHttpClient)
     {
@@ -33,7 +40,7 @@ internal sealed partial class SearchEndpoint
     private string GroupAndEmphasize(IEnumerable<JokeResponse> jokes, string term)
     {
         var messages = new Dictionary<Size, List<string>>();
-        var emphasizer = new Emphasizer(term, Emphasize.AngleBrackets);
+        var emphasizer = new Emphasizer(term, new AngleBracketHighlighter());
 
         foreach (var joke in jokes.Select(jokeResponse => jokeResponse.Joke))
         {
