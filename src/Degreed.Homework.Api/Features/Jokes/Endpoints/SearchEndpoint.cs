@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Degreed.Homework.Api.Features.Jokes.Endpoints;
 
-internal sealed partial class SearchEndpoint
+internal sealed class SearchEndpoint
     : EndpointWithoutRequest
 {
     private readonly DadJokeHttpClient _dadJokeHttpClient;
