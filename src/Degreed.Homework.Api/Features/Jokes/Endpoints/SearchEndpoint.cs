@@ -39,7 +39,7 @@ internal sealed class SearchEndpoint
 
     private string GroupAndEmphasize(IEnumerable<JokeResponse> jokes, string term)
     {
-        var messages = new Dictionary<Size, List<string>>();
+        var messages = new Dictionary<Size, List<string>>(jokes.Count());
         var emphasizer = new Emphasizer(term, new AngleBracketHighlighter());
 
         foreach (var joke in jokes.Select(jokeResponse => jokeResponse.Joke))
