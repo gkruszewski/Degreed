@@ -28,7 +28,7 @@ internal class DadJokeHttpClient
         return new()
         {
             StatusCode = (int)response.StatusCode,
-            Result = response.IsSuccessStatusCode ? JsonSerializer.Deserialize<JokeResponse>(content, JsonSerializerOptions) : new Result<JokeResponse>(new InvalidOperationException(content))
+            Result = response.IsSuccessStatusCode ? JsonSerializer.Deserialize<JokeResponse>(content, JsonSerializerOptions) : new Result<JokeResponse>(new HttpRequestException(content))
         };
     }
 
@@ -55,7 +55,7 @@ internal class DadJokeHttpClient
         return new()
         {
             StatusCode = (int)response.StatusCode,
-            Result = response.IsSuccessStatusCode ? JsonSerializer.Deserialize<JokePaginationResponse>(content, JsonSerializerOptions) : new Result<JokePaginationResponse>(new InvalidOperationException(content))
+            Result = response.IsSuccessStatusCode ? JsonSerializer.Deserialize<JokePaginationResponse>(content, JsonSerializerOptions) : new Result<JokePaginationResponse>(new HttpRequestException(content))
         };
     }
 }
