@@ -11,13 +11,13 @@ internal readonly ref struct Emphasizer
         _highlight = highlight;
     }
 
-    public bool TryMatch(ReadOnlySpan<char> value, int index, StringComparison stringComparison, out ReadOnlySpan<char> emphasizedTerm)
+    public bool TryMatch(ReadOnlySpan<char> text, int index, StringComparison stringComparison, out ReadOnlySpan<char> emphasizedTerm)
     {
         emphasizedTerm = null;
 
-        if (_term.Length > 0 && index + _term.Length <= value.Length)
+        if (_term.Length > 0 && index + _term.Length <= text.Length)
         {
-            var part = value.Slice(index, _term.Length);
+            var part = text.Slice(index, _term.Length);
 
             if (part.Equals(_term, stringComparison))
             {

@@ -12,7 +12,7 @@ internal sealed class SearchEndpoint
 
     private enum Size
     {
-        Small,
+        Short,
         Medium,
         Large
     }
@@ -83,7 +83,7 @@ internal sealed class SearchEndpoint
 
         return wordCount switch
         {
-            < 10 => (Size.Small, characters),
+            < 10 => (Size.Short, characters),
             < 20 => (Size.Medium, characters),
             _ => (Size.Large, characters)
         };
